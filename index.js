@@ -7,24 +7,28 @@ const userRouter  = require('./src/Routes/user.js');
 const citaRouter = require('./src/Routes/cita.js');
 const consultaRouter = require('./src/Routes/consulta.js');
 const enfermedadRouter = require('./src/Routes/enfermedad.js');
-const tratamientoModel = require('./src/Routes/tratamiento.js');
-const medicamentoModel = require('./src/Routes/medicamento.js')
+const tratamientoRouter = require('./src/Routes/tratamiento.js');
+const medicamentoRouter = require('./src/Routes/medicamento.js')
+const authTokenRouter = require('./src/Routes/auth_token');
+const cors = require('cors');
 //middleware
 app.use(express.json());
+app.use(cors());
+
 app.use('/api', userRouter);
 app.use('/api', citaRouter);
 app.use('/api', consultaRouter);
 app.use('/api', enfermedadRouter);
-app.use('/api', tratamientoModel);
-app.use('/api', medicamentoModel);
-
+app.use('/api', tratamientoRouter);
+app.use('/api', medicamentoRouter);
+app.use('/api', authTokenRouter);
 app.get('/', (req, res)=> {
   res.send("Welcome to the API of medical-project");
 })
 
 
 //port 
-const PORT = process.env.PORT || 4000;  
+const PORT = process.env.PORT || 8000;  
 
 //connection to mongodb 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
