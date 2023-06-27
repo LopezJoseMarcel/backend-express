@@ -2,6 +2,7 @@
 const { format } = require('date-fns');
 const express = require('express');
 const citaModel = require('../models/citaModel');
+const { default: mongoose } = require('mongoose');
 const systemFecha = new Date();
 const fecha_actual = format(systemFecha,'yyyy-MM-dd').toString();
 const mes = format(systemFecha,'MM');
@@ -17,6 +18,29 @@ citaRouter.post('/citas', (req, res) => {
   .then(data => res.json(data))
   .catch(error => res.json({message: error}))
 });
+//get next citas
+citaRouter.get('/citas-next/:id', (req, res) => {
+  const id = req.params.id;
+  citaModel.find({usuario_id: new mongoose.Types.ObjectId(id) ,fecha: {$gte :fecha_actual}}).sort({fecha: 1})
+  .then(data => res.json(data))
+  .catch(error => res.json({message: error})) 
+})
+
+//get citas using date 
+citaRouter.get('/citas-fecha/:fecha', (req, res) => {
+  const fechaP = req.params.fecha;
+  citaModel.find({fecha: fechaP}).sort({fecha: 1})
+  .then(data => res.json(data))
+  .catch(error => res.json({message: error})) 
+})
+
+//get old citas
+citaRouter.get('/citas-last/:id', (req, res) => {
+  const id = req.params.id;
+  citaModel.find({usuario_id: new mongoose.Types.ObjectId(id) ,fecha: {$lt :fecha_actual}}).sort({fecha: 1})
+  .then(data => res.json(data))
+  .catch(error => res.json({message: error})) 
+})
 
 //get specific cita with the cita's id
 citaRouter.get('/citas/:id', (req, res) => {

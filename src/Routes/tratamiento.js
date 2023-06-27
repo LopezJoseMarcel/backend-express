@@ -1,5 +1,6 @@
 const express = require( 'express' );
 const tratamientoModel = require( '../models/tratamientoModel' );
+const { default: mongoose } = require('mongoose');
 
 const tratamientoRouter = express.Router();
 
@@ -27,7 +28,27 @@ tratamientoRouter.get('/tratamientos/:id', (req, res) => {
   .catch(error => res.json({message: error}));
 })
 
-//
+//get tratamiento whit its disease
+tratamientoRouter.get('/tratamiento-disease/:id', (req, res) => {
+  const id = req.params.id;
+  tratamientoModel.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(id) // Reemplaza con el ID del tratamiento que deseas consultar
+      }
+    },
+    {
+      $lookup: {
+        from: "medicamento",
+        localField: "medicamento_id",
+        foreignField: "_id",
+        as: "medicamento_info"
+      }
+    }
+  ])
+  .then(data => res.json(data))
+  .catch(error => res.json({message: error}));
+})
 
 //update
 

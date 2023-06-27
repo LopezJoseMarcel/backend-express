@@ -4,6 +4,9 @@ const userSchema =  new mongoose.Schema({
     type: String,
     required: true
   },
+  movil: {
+    type: String
+  },
   apellido: {
     type: String,
     required: true
@@ -33,20 +36,27 @@ const userSchema =  new mongoose.Schema({
   tratamiento_activo: {
     type: Boolean
   },
-  tratamiento: {
-    type: [mongoose.Schema.Types.ObjectId]
+  enfermedad_activa: {
+    type: Boolean
   },
+  tratamiento: [{
+    type: mongoose.Schema.Types.ObjectId
+  }],
+  enfermedad: [{
+    type: mongoose.Schema.Types.ObjectId
+  }],
+  enfermedad_presuntiva: [{
+    type: mongoose.Schema.Types.ObjectId
+  }],
   direccion: {
-    type: {
-      calle: {
-        type: String
-      },
-      barrio: {
-        type: String
-      },
-      ciudad: {
-        type: String
-      }
+    calle: {
+      type: String
+    },
+    barrio: {
+      type: String
+    },
+    ciudad: {
+      type: String
     }
   }
 });

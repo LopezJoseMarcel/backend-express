@@ -4,13 +4,24 @@ const userModel = require('../models/userModel')
 const userRouter = express.Router();
 
 //create user
-userRouter.post('/usuarios', (req, res) => {
+userRouter.post('/usuarios', async (req, res) => {
   const user = userModel(req.body);
   console.log(req.body);
+
+  // Check if the email already exists
+  const foundUser = await userModel.findOne({ email: req.body.email });
+
+  // If the user exists, return an error
+  if (foundUser) {
+    res.status(409).json({ message: 'El correo electrónico ya existe' });
+    return;
+  }
+
+  // The user does not exist, so save them
   user
-  .save()
-  .then(data => res.json(data))
-  .catch( error => res.json({message: error}));
+    .save()
+    .then(data => res.json(data))
+    .catch( error => res.json({message: error}));
 });
 
 //get all users
@@ -36,6 +47,21 @@ userRouter.put('/usuarios/:id', (req, res) => {
 
   userModel.findByIdAndUpdate(id, { $set: updateFields }, { new: true })
     .then(data => res.json(data))
+    .catch(error => res.json({ message: error }));
+});
+
+userRouter.put('/usuarios', (req, res) => {
+  const email = req.query.email; // Obtiene el valor del parámetro 'email' en la consulta
+  const updateFields = req.body;
+
+  userModel.findOneAndUpdate({ email: email }, { $set: updateFields }, { new: true })
+    .then(data => {
+      if (data) {
+        res.json(data);
+      } else {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+    })
     .catch(error => res.json({ message: error }));
 });
 

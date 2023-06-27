@@ -2,16 +2,7 @@ const mongoose = require('mongoose');
 
 const tratamientoSchema = new mongoose.Schema({
   medicamento_id: {
-    type: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Medicamento',
-    }],
-    validate: {
-      validator: function(value) {
-        return Array.isArray(value) && value.length > 0;
-      },
-      message: 'El campo medicamento_id debe ser un array con al menos un elemento',
-    },
+    type: mongoose.Schema.Types.ObjectId
   },
   cantidad_uso: {
     type: {

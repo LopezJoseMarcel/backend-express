@@ -52,14 +52,7 @@ authTokenRouter.get("/profile", async (req, res) => {
 			
 		}
 
-    //const user = USERS_BBDD.find((user) => user.guid === payload.guid);
-		/*const user = await User.findOne({ guid: payload.guid });
-
-    if (!user) return res.sendStatus(401);
-    delete user.contrasenha;
-
-    return res.send(user);
-    */
+    
 });
 
 module.exports = authTokenRouter;

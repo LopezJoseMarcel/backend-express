@@ -51,6 +51,16 @@ enfermedadRouter.put('/enfermedades/:id', (req, res) => {
     .catch(error => res.json({ message: error }));
 });
 
+//update Array
+enfermedadRouter.put('/enfermedades_tratamientos/:id', (req, res) => {
+	const id = req.params.id;
+	const updateFields = req.body;
+  
+	enfermedadModel.findByIdAndUpdate(id, { $push: { id_tratamiento: updateFields.id_tratamiento } }, { new: true })
+	  .then(data => res.json(data))
+	  .catch(error => res.json({ message: error }));
+  });
+
 //delete
 enfermedadRouter.delete('/enfermedades/:id', (req, res) => {
   const id = req.params.id;

@@ -20,12 +20,18 @@ const diagnosticoSchema = new mongoose.Schema({
   diagnostico_presuntivo: [{ type: mongoose.Schema.Types.ObjectId }],
 });
 
+const tratamientoSchema = new mongoose.Schema({
+  tratamiento_enfer_final: {type: mongoose.Schema.Types.ObjectId},
+  tratamiento_enfer_pre: {type: mongoose.Schema.Types.ObjectId}
+})
+
 const consultaSchema = new mongoose.Schema({
   usuario_id: { type: mongoose.Schema.Types.ObjectId, required: true },
   cita_id: { type: mongoose.Schema.Types.ObjectId, required: true },
   motivo_consulta: { type: String, required: true },
   examen_fisico: { type: examenFisicoSchema },
   diagnostico: { type: diagnosticoSchema },
+  tratamiento: { type: tratamientoSchema},
 });
 
 module.exports = mongoose.model('consulta', consultaSchema, 'consulta');
