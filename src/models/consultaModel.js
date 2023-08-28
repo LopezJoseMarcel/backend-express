@@ -32,6 +32,7 @@ const consultaSchema = new mongoose.Schema({
   examen_fisico: { type: examenFisicoSchema },
   diagnostico: { type: diagnosticoSchema },
   tratamiento: { type: tratamientoSchema},
+  ubicacion_lesion: {type: String},
 });
 
 module.exports = mongoose.model('consulta', consultaSchema, 'consulta');

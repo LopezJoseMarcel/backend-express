@@ -7,6 +7,9 @@ const medicamentoSchema = new mongoose.Schema({
   usos: { type: [String], required: true },
   efectos_secundarios: { type: [String], required: true },
   administracion: { type: [String], required: true },
+  numero_diccionario: {
+    type : Number ,
+  },
 });
 
 module.exports = mongoose.model('medicamento', medicamentoSchema, 'medicamento');

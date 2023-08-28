@@ -20,6 +20,9 @@ const enfermedadSchema = new mongoose.Schema({
   causas: {
     type: [String],
     required: true
+  },
+  numero_diccionario: {
+    type : Number ,
   }
 });
 

@@ -32,6 +32,15 @@ const tratamientoSchema = new mongoose.Schema({
       },
     },
   },
+    tratamiento_satisfactorio:{
+      type : Boolean ,
+    },
+    tratamiento_completado:{
+      type : Boolean
+    },
+    usuario_id: {
+      type: mongoose.Schema.Types.ObjectId
+    }
 });
 
 const tratamientoModel = mongoose.model('tratamiento', tratamientoSchema,'tratamiento');
