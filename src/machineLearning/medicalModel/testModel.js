@@ -1,13 +1,25 @@
 function prediccionMedica(enfermedad, outputs,inputFunction) {
 
   const OUTPUTSletra = `OUTPUTS${outputs}`;
-  
+  const roundArrayValues = require('./Utils/Round.js');
   const tf = require('@tensorflow/tfjs-node');
   const normalize = require('./Utils/normalize.js');
-  const DATA_MED = require(`./Data/medicalData0${enfermedad}.js`);
-  const roundArrayValues = require('./Utils/Round.js');
-
-  const direcction = `file:///mnt/c/MARCEL_uNi/TCC/Finalproject/backend-express/src/machineLearning/Models/Models0${enfermedad}/medicalModel0${enfermedad}0${outputs}/model0${enfermedad}0${outputs}.json`;
+  let DATA_MED;
+  if (enfermedad < 10) {
+     DATA_MED = require(`./Data/medicalData0${enfermedad}.js`);
+  }else{
+    DATA_MED = require(`./Data/medicalData${enfermedad}.js`);
+  }
+ 
+ 
+  let direcction;
+  if (enfermedad > 9) {
+    direcction = `file:///mnt/c/MARCEL_uNi/TCC/Finalproject/backend-express/src/machineLearning/Models/Models${enfermedad}/medicalModel${enfermedad}0${outputs}/model.json`;
+    console.log(direcction);
+  } else {
+    direcction = `file:///mnt/c/MARCEL_uNi/TCC/Finalproject/backend-express/src/machineLearning/Models/Models0${enfermedad}/medicalModel0${enfermedad}0${outputs}/model.json`;
+  }
+ 
 
   const INPUTS = DATA_MED.INPUTS;
   let OUTPUTS ;

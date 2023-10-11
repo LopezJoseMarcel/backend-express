@@ -51,6 +51,7 @@ enfermedadRouter.put('/enfermedades/:id', (req, res) => {
     .catch(error => res.json({ message: error }));
 });
 
+
 //update Array
 enfermedadRouter.put('/enfermedades_tratamientos/:id', (req, res) => {
 	const id = req.params.id;

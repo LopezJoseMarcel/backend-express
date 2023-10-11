@@ -11,6 +11,9 @@ const tratamientoRouter = require('./src/Routes/tratamiento.js');
 const medicamentoRouter = require('./src/Routes/medicamento.js')
 const authTokenRouter = require('./src/Routes/auth_token');
 const prediccionRouter = require('./src/Routes/medicalPrediction.js');
+const model_infoRouter = require('./src/Routes/model_info.js');
+const train_infoRouter = require('./src/Routes/trainDisease.js');
+
 const cors = require('cors');
 //middleware
 app.use(express.json());
@@ -24,6 +27,8 @@ app.use('/api', tratamientoRouter);
 app.use('/api', medicamentoRouter);
 app.use('/api', authTokenRouter);
 app.use('/api', prediccionRouter);
+app.use('/api', model_infoRouter);
+app.use('/api', train_infoRouter);
 app.get('/', (req, res)=> {
   res.send("Welcome to the API of medical-project");
 })

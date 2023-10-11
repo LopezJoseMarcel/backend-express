@@ -23,6 +23,9 @@ const enfermedadSchema = new mongoose.Schema({
   },
   numero_diccionario: {
     type : Number ,
+  },
+  enfermedad_entrenada:{
+    type: Boolean,
   }
 });
 
