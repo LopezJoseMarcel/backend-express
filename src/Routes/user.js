@@ -24,6 +24,35 @@ userRouter.post('/usuarios', async (req, res) => {
     .catch( error => res.json({message: error}));
 });
 
+//get all consultas with is user
+
+userRouter.get('/usuario_consultas', (req, res) => {
+  try {
+    const pipeline = [
+      {
+        $lookup: {
+          from: "consulta",
+          localField: "_id",
+          foreignField: "usuario_id",
+          as: "consulta",
+        },
+      },
+      {
+        $unwind: '$consulta',
+      },
+    ];
+
+    const response = userModel.aggregate(pipeline)
+    .then(result => res.json(result))
+    .catch(error => {
+      res.status(500).json({ error: 'Error al obtener las consultas' })
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener las consultas' });
+  }
+});
+
+
 //get all users
 userRouter.get('/usuarios', (req, res) => {
   userModel

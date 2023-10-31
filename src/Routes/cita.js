@@ -78,15 +78,13 @@ citaRouter.get('/citas', (req, res) => {
 
 citaRouter.put('/citas/:id', (req, res) => {
   const id = req.params.id;
-  const {usuario_id, fecha, turno} = req.body;
+  const updateFields = req.body;
 
-  citaModel.updateOne({_id: id},{
-    $set:{ usuario_id, fecha, turno}
-  })
+  citaModel.findByIdAndUpdate(id, { $set: updateFields }, { new: true })
   .then(data => res.json(data))
-  .catch(error => res.json({message: error}))
-
+  .catch(error => res.json({ message: error }));
 });
+
 
 //delete a cita
 citaRouter.delete('/citas/:id', (req, res) => {

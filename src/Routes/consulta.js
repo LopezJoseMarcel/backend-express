@@ -12,6 +12,79 @@ consultaRouter.post('/consultas', (req, res) => {
     .catch(error => res.json({message: error}))
   });
 
+//get all consultas with is cita
+
+consultaRouter.get('/consultas_citas', (req, res) => {
+  try {
+    const pipeline = [
+      {
+        $lookup: {
+          from: 'cita',
+          localField: 'cita_id',
+          foreignField: '_id',
+          as: 'cita',
+        },
+      },
+      {
+        $unwind: '$cita',
+      },
+    ];
+
+    const response = consultaModel.aggregate(pipeline)
+    .then(result => res.json(result))
+    .catch(error => {
+      res.status(500).json({ error: 'Error al obtener las consultas' })
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener las consultas' });
+  }
+});
+
+consultaRouter.get('/consultas_usuario', (req, res) => {
+  try {
+    const pipeline = [
+      {
+        $project: {
+          usuario_id: 1,
+          diagnostico: 1
+        }
+      },
+      {
+        $lookup: {
+          from: 'usuario',
+          localField: 'usuario_id',
+          foreignField: '_id',
+          as: 'usuario'
+        }
+      },
+      {
+        $unwind: '$usuario'
+      },
+      {
+        $project: {
+          usuario_id: 1,
+          diagnostico: 1,
+          'usuario.nombre': 1, // Reemplaza 'nombre' con los campos que deseas
+          'usuario.apellido': 1,
+          'usuario.direccion':1,
+          // Agrega más campos del usuario según tus necesidades
+        }
+      }
+    ];
+
+    const response = consultaModel.aggregate(pipeline)
+      .then(result => res.json(result))
+      .catch(error => {
+        res.status(500).json({ error: 'Error al obtener las consultas' });
+      });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener las consultas' });
+  }
+});
+
+
+
+
 //get all consultas
 consultaRouter.get('/consultas', (req, res) => {
   consultaModel.find()
