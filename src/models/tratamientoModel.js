@@ -4,6 +4,10 @@ const tratamientoSchema = new mongoose.Schema({
   medicamento_id: {
     type: mongoose.Schema.Types.ObjectId
   },
+  valoracion: {
+    type: Number,
+  }
+  ,
   cantidad_uso: {
     type: {
       cantidad: {

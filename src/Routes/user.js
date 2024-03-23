@@ -69,6 +69,40 @@ userRouter.get('/usuarios/:id', (req, res) => {
   .catch(error => res.json({ message: error}))
 });
 
+//update tratamiento
+userRouter.put('/usuarios_tratamiento/:id', (req, res) => {
+  const id = req.params.id;
+  const nuevosElementos = req.body.nuevosElementos;
+
+  userModel.findByIdAndUpdate(
+    id,
+    { $push: { historial_tratamientos: { $each: nuevosElementos } } },
+    { new: true } // Esto devuelve el documento actualizado
+  )
+  .then(data => res.json(data))
+  .catch(error => res.json({ message: error })
+  );
+
+});
+//end update tratamiento
+
+//update enfermedad historial
+userRouter.put('/usuarios_enfermedad/:id', (req, res) => {
+  const id = req.params.id;
+  const nuevosElementos = req.body.nuevosElementos;
+
+  userModel.findByIdAndUpdate(
+    id,
+    { $push: { historial_enfermedades: { $each: nuevosElementos } } },
+    { new: true } // Esto devuelve el documento actualizado
+  )
+  .then(data => res.json(data))
+  .catch(error => res.json({ message: error })
+  );
+
+});
+//end update enfermedad historial
+
 //update a user
 userRouter.put('/usuarios/:id', (req, res) => {
   const id = req.params.id;

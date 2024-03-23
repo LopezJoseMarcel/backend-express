@@ -42,6 +42,13 @@ const userSchema =  new mongoose.Schema({
   tratamiento: [{
     type: mongoose.Schema.Types.ObjectId
   }],
+  historial_tratamientos:[{
+    type: mongoose.Schema.Types.ObjectId
+  }],
+  historial_enfermedades:[{
+    type: mongoose.Schema.Types.ObjectId
+  }]
+  ,
   enfermedad: [{
     type: mongoose.Schema.Types.ObjectId
   }],

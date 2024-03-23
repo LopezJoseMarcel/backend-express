@@ -61,6 +61,27 @@ tratamientoRouter.put('/tratamientos/:id', (req, res) => {
     .catch(error => res.json({ message: error }));
 });
 
+// Update or create valoracion in tratamiento
+tratamientoRouter.put('/tratamientos_valoracion/:id', (req, res) => {
+  const id = req.params.id;
+  const { valoracion } = req.body;
+
+  tratamientoModel.findById(id)
+    .then(tratamiento => {
+      // Si el tratamiento no tiene la clave 'valoracion', la crea
+      if (!tratamiento.valoracion) {
+        tratamiento.valoracion = valoracion;
+      } else {
+        // Si ya tiene la clave 'valoracion', simplemente la actualiza
+        tratamiento.valoracion = valoracion;
+      }
+
+      return tratamiento.save();
+    })
+    .then(data => res.json(data))
+    .catch(error => res.json({ message: error }));
+});
+
 
 //delete
 tratamientoRouter.delete('/tratamientos/:id', (req, res) => {

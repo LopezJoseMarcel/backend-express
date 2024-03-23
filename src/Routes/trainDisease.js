@@ -12,7 +12,7 @@ const train_infoRouter = express.Router();
 // Get a model_info by numero de diccionario
 train_infoRouter.get('/trainDisease', (req, res) => {
     const numero_diccionario = req.query.numero_diccionario;
-      informacion_modelModel.find({"numero_diccionario": numero_diccionario})
+      const data = informacion_modelModel.find({"numero_diccionario": numero_diccionario})
       .sort({"output1.0.0": 1})
       .then(data => {
 
@@ -54,8 +54,8 @@ train_infoRouter.get('/trainDisease', (req, res) => {
               });
             
               let results = await model.fit(normalizedInputs.NORMALIZED_VALUES, normalizedOutputs.NORMALIZED_VALUES, {
-                epochs: 300, // Aumenta el número de épocas
-                batchSize: 10,
+                epochs: 150, // Aumenta el número de épocas
+                batchSize: 50,
                 shuffle: true,
                 callbacks: { onEpochEnd: logProgress }
               });
@@ -66,7 +66,7 @@ train_infoRouter.get('/trainDisease', (req, res) => {
               normalizedOutputs.NORMALIZED_VALUES.dispose();
               //data
               evaluate([55, 1, 10, 2, 29]);
-              res.json({"result":'ok'});// <--
+              //res.json({"result":'ok'});// <--
             }
             
             function evaluate(value) {
@@ -85,6 +85,10 @@ train_infoRouter.get('/trainDisease', (req, res) => {
             } 
             
         }
+        setTimeout(() => {
+          res.json({"result":'ok'});
+        }, 5000);
+        // <--
       })
       .catch(error => res.json({ message: error }));
   });

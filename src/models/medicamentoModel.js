@@ -10,6 +10,7 @@ const medicamentoSchema = new mongoose.Schema({
   numero_diccionario: {
     type : Number ,
   },
+  dosis_alert: { type : Number },
 });
 
 module.exports = mongoose.model('medicamento', medicamentoSchema, 'medicamento');
